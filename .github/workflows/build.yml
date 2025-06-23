@@ -39,6 +39,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-cargo-
 
+      - name: Fetch dependencies
+        run: cargo fetch --verbose
+
       - name: Build binary
         run: cargo build --verbose --release
 

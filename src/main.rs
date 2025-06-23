@@ -82,7 +82,7 @@ async fn subscribe_to_instruments(
 
     // Connect to Redis
     let redis_client = redis::Client::open("redis://127.0.0.1/")?;
-    let mut con = redis_client.get_async_connection().await?;
+    let mut con = redis_client.get_multiplexed_async_connection().await?;
 
     // Listen for messages
     while let Some(message) = read.next().await {
