@@ -2,9 +2,9 @@ name: Build Rust Project
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 env:
   CARGO_TERM_COLOR: always
@@ -34,20 +34,19 @@ jobs:
             ~/.cargo/registry/index/
             ~/.cargo/registry/cache/
             ~/.cargo/git/db/
-            deribit-wss/deribit-wss-rust/target/
+            target/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: |
             ${{ runner.os }}-cargo-
 
       - name: Build binary
         run: cargo build --verbose --release
-        working-directory: ./deribit-wss/deribit-wss-rust
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: deribit-wss-rust-${{ matrix.os }}
           path: |
-            deribit-wss/deribit-wss-rust/target/release/deribit-wss-rust
-            deribit-wss/deribit-wss-rust/target/release/deribit-wss-rust.exe
+            target/release/deribit-wss-rust
+            target/release/deribit-wss-rust.exe
           if-no-files-found: ignore
